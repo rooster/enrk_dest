@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-
+ini_set("display_errors", false);
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -46,12 +46,32 @@ include("header.php");
   <h1 style="background-color: #fff;">ENRK Destinations</h1>
   <?php foreach ($values as $row): ?>
     <?php if (empty($row[$cellmap["name"]])) continue; ?>
-    <header class="header"><?php echo $row[$cellmap["name"]]; ?></header>
-    <aside class="sidebar">Sidebar</aside>
-    <article class="content">
-      <?php print_r($row); ?>
-    </article>
-    <footer class="footer">My footer</footer>
+    <h2><?php echo $row[$cellmap["name"]]; ?></h2>
+    <div class="sidebar">
+      <ul>
+        <li>Distance: <?php echo $row[$cellmap["name"]]; ?></li>
+        <li>Time (P28 calm): <?php echo $row[$cellmap["time"]]; ?></li>
+        <li>Short term parking: <?php echo $row[$cellmap["parking"]]; ?></li>
+        <li>Airside toilet: <?php echo $row[$cellmap["toilet"]]; ?></li>
+        <li>Airside refreshments: <?php echo $row[$cellmap["refreshments"]]; ?></li>
+        <li>Able to easily leave/return: <?php echo $row[$cellmap["leave_return"]]; ?></li>
+        <li>Toilet within walking distance: <?php echo $row[$cellmap["toilet_walk"]]; ?></li>
+        <li>Refreshments within walking distance: <?php echo $row[$cellmap["refreshments_walk"]]; ?></li>
+        <li>100LL available: <?php echo $row[$cellmap["100LL"]]; ?></li>
+        <li>Ease of planning/visiting: <?php echo $row[$cellmap["ease_planning"]]; ?></li>
+        <li>PPR if required: <?php echo $row[$cellmap["PPR"]]; ?></li>
+      </ul>
+    </div>
+    <div class="content">
+      <?php if (!empty($row[$cellmap["attractions"]])): ?>
+        <h3>Local attractions / Reasons to visit</h3>
+        <p><?php echo nl2br($row[$cellmap["attractions"]]); ?></p>
+      <?php endif; ?>
+      <?php if (!empty($row[$cellmap["comments"]])): ?>
+        <h3>Comments</h3>
+        <p><?php echo nl2br($row[$cellmap["comments"]]); ?></p>
+      <?php endif; ?>
+    </div>
   <?php endforeach; ?>
 </div>
 
