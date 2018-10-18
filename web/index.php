@@ -33,16 +33,26 @@ $range    = 'Sheet1';
 $response = $service->spreadsheets_values->get($settings["spreadsheetId"], $range);
 $values   = $response->getValues();
 
-if (empty($values)) {
-    print "No data found.\n";
-} else {
-  echo "<table>";   
-  foreach ($values as $row) {
-    echo "<tr>";
-    foreach ($row as $cell) {
-      echo "<td>" . $cell . "</td>";
-    }
-    echo "</tr>";
-  }
-  echo "</table>";
-}
+$headers = array("name", "distance", "time", "parking", "toilet", "refreshments", "leave_return",
+                 "toilet_walk", "refreshments_walk", "100LL", "ease_planning", "PPR", "attractions",
+                 "comments", "links");
+$cellmap = array_flip($headers);
+
+include("header.php");
+
+?>
+
+<div class="wrapper">
+  <h1 style="background-color: #fff;">ENRK Destinations</h1>
+  <?php foreach ($values as $row): ?>
+    <?php if (empty($row[$cellmap["name"]])) continue; ?>
+    <header class="header"><?php echo $row[$cellmap["name"]]; ?></header>
+    <aside class="sidebar">Sidebar</aside>
+    <article class="content">
+      <?php print_r($row); ?>
+    </article>
+    <footer class="footer">My footer</footer>
+  <?php endforeach; ?>
+</div>
+
+<?php include("footer.php");
